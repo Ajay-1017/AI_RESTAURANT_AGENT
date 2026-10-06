@@ -1,0 +1,193 @@
+{
+  "_comment": "Fictional restaurants around Chennai in a deliberately provider-specific format. MockRestaurantProvider normalizes it into our Restaurant model.",
+  "results": [
+    {
+      "slug": "saffron-dum-house",
+      "title": "Saffron Dum House",
+      "tags": ["biryani", "hyderabadi"],
+      "stars": 4.5,
+      "reviews": 1820,
+      "cost_for_two": 700,
+      "coords": {"latitude": 13.0418, "longitude": 80.2341},
+      "address": "Usman Road, T. Nagar, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Chicken Dum Biryani", "price": "349.00"},
+        {"dish": "Mutton Dum Biryani", "price": "429.00"},
+        {"dish": "Veg Dum Biryani", "price": "249.00"},
+        {"dish": "Mirchi ka Salan", "price": "99.00"}
+      ]
+    },
+    {
+      "slug": "ambur-star-biryani",
+      "title": "Ambur Star Biryani",
+      "tags": ["biryani", "tamil"],
+      "stars": 4.3,
+      "reviews": 960,
+      "cost_for_two": 400,
+      "coords": {"latitude": 13.0521, "longitude": 80.2255},
+      "address": "Arcot Road, Kodambakkam, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Ambur Chicken Biryani", "price": "220.00"},
+        {"dish": "Ambur Mutton Biryani", "price": "290.00"},
+        {"dish": "Bread Halwa", "price": "80.00"}
+      ]
+    },
+    {
+      "slug": "nawabs-kitchen",
+      "title": "Nawab's Kitchen",
+      "tags": ["mughlai", "biryani", "north indian"],
+      "stars": 4.6,
+      "reviews": 3400,
+      "cost_for_two": 1200,
+      "coords": {"latitude": 13.0540, "longitude": 80.2640},
+      "address": "Royapettah High Road, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Lucknowi Mutton Biryani", "price": "499.00"},
+        {"dish": "Chicken Biryani", "price": "399.00"},
+        {"dish": "Galouti Kebab", "price": "399.00"},
+        {"dish": "Sheer Khurma", "price": "149.00"}
+      ]
+    },
+    {
+      "slug": "biryani-point-express",
+      "title": "Biryani Point Express",
+      "tags": ["biryani"],
+      "stars": 5.0,
+      "reviews": 3,
+      "cost_for_two": 350,
+      "coords": {"latitude": 13.0569, "longitude": 80.2425},
+      "address": "Nungambakkam High Road, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Chicken Biryani", "price": "199.00"},
+        {"dish": "Egg Biryani", "price": "159.00"}
+      ]
+    },
+    {
+      "slug": "coastal-catch",
+      "title": "Coastal Catch",
+      "tags": ["seafood", "chettinad"],
+      "stars": 4.4,
+      "reviews": 1240,
+      "cost_for_two": 1400,
+      "coords": {"latitude": 13.0003, "longitude": 80.2667},
+      "address": "Elliot's Beach Road, Besant Nagar, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Prawn Biryani", "price": "459.00"},
+        {"dish": "Fish Fry", "price": "329.00"},
+        {"dish": "Crab Masala", "price": "529.00"}
+      ]
+    },
+    {
+      "slug": "annapoorna-tiffin-centre",
+      "title": "Annapoorna Tiffin Centre",
+      "tags": ["south indian", "vegetarian"],
+      "stars": 4.7,
+      "reviews": 5200,
+      "cost_for_two": 300,
+      "coords": {"latitude": 13.0339, "longitude": 80.2619},
+      "address": "North Mada Street, Mylapore, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Masala Dosa", "price": "90.00"},
+        {"dish": "Idli Vada", "price": "70.00"},
+        {"dish": "Filter Coffee", "price": "40.00"}
+      ]
+    },
+    {
+      "slug": "chettinad-courtyard",
+      "title": "Chettinad Courtyard",
+      "tags": ["chettinad", "south indian"],
+      "stars": 4.2,
+      "reviews": 780,
+      "cost_for_two": 800,
+      "coords": {"latitude": 13.0012, "longitude": 80.2565},
+      "address": "LB Road, Adyar, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Chettinad Chicken Curry", "price": "320.00"},
+        {"dish": "Kozhi Biryani", "price": "300.00"},
+        {"dish": "Kothu Parotta", "price": "180.00"}
+      ]
+    },
+    {
+      "slug": "green-leaf-meals",
+      "title": "Green Leaf Meals",
+      "tags": ["south indian", "vegetarian"],
+      "stars": 4.1,
+      "reviews": 640,
+      "cost_for_two": 350,
+      "coords": {"latitude": 13.0732, "longitude": 80.2609},
+      "address": "Pantheon Road, Egmore, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Full Meals", "price": "180.00"},
+        {"dish": "Curd Rice", "price": "90.00"}
+      ]
+    },
+    {
+      "slug": "napoli-oven",
+      "title": "Napoli Oven",
+      "tags": ["pizza", "italian"],
+      "stars": 4.4,
+      "reviews": 1100,
+      "cost_for_two": 1300,
+      "coords": {"latitude": 13.0850, "longitude": 80.2101},
+      "address": "2nd Avenue, Anna Nagar, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Margherita Pizza", "price": "399.00"},
+        {"dish": "Penne Arrabbiata", "price": "349.00"}
+      ]
+    },
+    {
+      "slug": "dragon-wok",
+      "title": "Dragon Wok",
+      "tags": ["chinese"],
+      "stars": 3.9,
+      "reviews": 450,
+      "cost_for_two": 600,
+      "coords": {"latitude": 12.9815, "longitude": 80.2180},
+      "address": "100 Feet Road, Velachery, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Hakka Noodles", "price": "220.00"},
+        {"dish": "Chicken Fried Rice", "price": "240.00"}
+      ]
+    },
+    {
+      "slug": "thalassery-spice",
+      "title": "Thalassery Spice",
+      "tags": ["kerala", "biryani"],
+      "stars": 4.3,
+      "reviews": 700,
+      "cost_for_two": 500,
+      "coords": {"latitude": 13.0067, "longitude": 80.2206},
+      "address": "GST Road, Guindy, Chennai",
+      "open_now": false,
+      "dishes": [
+        {"dish": "Thalassery Chicken Biryani", "price": "260.00"},
+        {"dish": "Malabar Parotta", "price": "40.00"}
+      ]
+    },
+    {
+      "slug": "tambaram-biryani-junction",
+      "title": "Tambaram Biryani Junction",
+      "tags": ["biryani"],
+      "stars": 4.8,
+      "reviews": 2100,
+      "cost_for_two": 400,
+      "coords": {"latitude": 12.9249, "longitude": 80.1000},
+      "address": "GST Road, Tambaram, Chennai",
+      "open_now": true,
+      "dishes": [
+        {"dish": "Chicken Biryani", "price": "210.00"},
+        {"dish": "Mutton Biryani", "price": "310.00"}
+      ]
+    }
+  ]
+}

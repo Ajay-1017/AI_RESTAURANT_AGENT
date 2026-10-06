@@ -36,6 +36,10 @@ class Settings(BaseSettings):
     # Secure cookies are only sent over HTTPS. Off for http://localhost in dev.
     cookie_secure: bool = False
 
+    # --- Restaurant search ---
+    # Which RestaurantProvider implementation to use. Only "mock" exists so far.
+    restaurant_provider: Literal["mock"] = "mock"
+
     @model_validator(mode="after")
     def require_secure_cookies_in_production(self) -> Self:
         if self.environment == "production" and not self.cookie_secure:
