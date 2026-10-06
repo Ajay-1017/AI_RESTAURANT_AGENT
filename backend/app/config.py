@@ -1,5 +1,6 @@
-from typing import Literal
+from typing import Literal, Self
 
+from pydantic import Field, SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,6 +27,20 @@ class Settings(BaseSettings):
     # Separate database used only by pytest. Tests that need it are
     # skipped when it is not set.
     test_database_url: str | None = None
+
+    # --- Authentication ---
+    # SecretStr hides the value in repr/logs: str(settings.jwt_secret_key) -> '**********'.
+    jwt_secret_key: SecretStr = Field(min_length=32)
+    access_token_expire_minutes: int = Field(default=15, gt=0)
+    refresh_token_expire_days: int = Field(default=7, gt=0)
+    # Secure cookies are only sent over HTTPS. Off for http://localhost in dev.
+    cookie_secure: bool = False
+
+    @model_validator(mode="after")
+    def require_secure_cookies_in_production(self) -> Self:
+        if self.environment == "production" and not self.cookie_secure:
+            raise ValueError("COOKIE_SECURE must be true in production")
+        return self
 
 
 settings = Settings()

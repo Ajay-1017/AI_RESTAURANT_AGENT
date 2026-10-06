@@ -13,5 +13,9 @@ sqlalchemy==2.1.1
 psycopg[binary]==3.3.6
 alembic==1.20.0
 
-# Email validation for Pydantic's EmailStr (used from Phase 3)
+# Email validation for Pydantic's EmailStr
 email-validator==2.3.0
+
+# Authentication: Argon2id password hashing, JWT access tokens
+argon2-cffi==25.1.0
+pyjwt==2.15.1
