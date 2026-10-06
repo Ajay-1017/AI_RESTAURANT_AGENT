@@ -1,0 +1,5 @@
+# Development/test-only dependencies. Never needed in production.
+-r requirements.txt
+
+pytest==9.1.1
+httpx2==2.13.1  # required by FastAPI's TestClient

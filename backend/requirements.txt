@@ -1,0 +1,17 @@
+# Runtime dependencies (installed in every environment, including production).
+# Pinned to exact versions so installs are reproducible.
+
+# Web framework + ASGI server
+fastapi==0.142.2
+uvicorn[standard]==0.54.0
+
+# Typed configuration from environment variables / .env
+pydantic-settings==2.15.0
+
+# Database (used from Phase 2)
+sqlalchemy==2.1.1
+psycopg[binary]==3.3.6
+alembic==1.20.0
+
+# Email validation for Pydantic's EmailStr (used from Phase 3)
+email-validator==2.3.0

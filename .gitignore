@@ -1,0 +1,21 @@
+# --- Secrets: never commit real environment files ---
+.env
+.env.*
+!.env.example
+
+# --- Python ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Node / frontend ---
+node_modules/
+dist/
+
+# --- Editors / OS ---
+.idea/
+.DS_Store
