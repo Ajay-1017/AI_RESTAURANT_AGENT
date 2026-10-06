@@ -17,13 +17,13 @@ There are no business features yet, on purpose.
 
 Every later phase plugs into this foundation:
 
-| Later phase | Depends on this foundation for... |
-|---|---|
-| Database | `settings.database_url` |
-| Auth | secret keys from config, routers |
-| Agent / LLM | API keys from config (never in code) |
-| Payments / Webhooks | webhook secrets from config, tests |
-| Production | health checks for load balancers / Kubernetes |
+| Later phase         | Depends on this foundation for...             |
+| ------------------- | --------------------------------------------- |
+| Database            | `settings.database_url`                     |
+| Auth                | secret keys from config, routers              |
+| Agent / LLM         | API keys from config (never in code)          |
+| Payments / Webhooks | webhook secrets from config, tests            |
+| Production          | health checks for load balancers / Kubernetes |
 
 Mistakes here are cheap to fix now and expensive later. For example, a payment API key committed to Git is in the history forever, and an app that can't be tested without a live database slows down every future change.
 
@@ -58,11 +58,11 @@ Your function — returns a dict
 
 Rule: **the same code runs everywhere; only the environment changes.**
 
-|  | Development | Production |
-|---|---|---|
-| Code | identical | identical |
+|                  | Development    | Production       |
+| ---------------- | -------------- | ---------------- |
+| Code             | identical      | identical        |
 | `DATABASE_URL` | local Postgres | managed Postgres |
-| `ENVIRONMENT` | development | production |
+| `ENVIRONMENT`  | development    | production       |
 
 Secrets (DB passwords, LLM keys, payment keys) live in environment variables, never in source files.
 
@@ -80,6 +80,7 @@ class Settings(BaseSettings):
 If `ENVIRONMENT=prod` (a typo), the app **refuses to start** with a clear `ValidationError`. That's the **fail fast** principle: catch problems at boot, not at 2 a.m. halfway through a payment.
 
 Lookup order for a field like `app_name`:
+
 1. A real environment variable `APP_NAME` (highest priority)
 2. A line `APP_NAME=...` in `.env`
 3. The default in the class
@@ -88,19 +89,19 @@ So production (no `.env` file, real env vars from the platform) and development 
 
 ### 3.5 `.env` vs `.env.example`
 
-| File | Contains | Committed? |
-|---|---|---|
-| `.env` | real values, secrets | **Never** |
+| File             | Contains                     | Committed?              |
+| ---------------- | ---------------------------- | ----------------------- |
+| `.env`         | real values, secrets         | **Never**         |
 | `.env.example` | variable names + fake values | Yes, it's documentation |
 
 A new developer runs `cp .env.example .env` and fills it in.
 
 ### 3.6 Liveness vs readiness
 
-| Check | Question | Touches DB? | Phase |
-|---|---|---|---|
-| `/health` (liveness) | "Is the process alive?" | **No** | 1 |
-| `/health/ready` (readiness) | "Can it serve real traffic?" | Yes | 2 |
+| Check                         | Question                     | Touches DB?  | Phase |
+| ----------------------------- | ---------------------------- | ------------ | ----- |
+| `/health` (liveness)        | "Is the process alive?"      | **No** | 1     |
+| `/health/ready` (readiness) | "Can it serve real traffic?" | Yes          | 2     |
 
 Why it matters: Kubernetes restarts a container whose liveness check fails. If liveness checked the DB, a DB outage would make Kubernetes restart **every healthy app server in a loop**, which makes the outage worse.
 
@@ -169,6 +170,7 @@ AI_RESTAURANT_AGENT/
 ```
 
 Changes to code that already existed:
+
 - `app/main.py`: removed the DB connection from `/`, now uses settings and the router.
 - `app/config.py`: `os.getenv` replaced by `Settings`.
 - `app/db/database.py`, `alembic/env.py`: import `settings` instead of the removed `DATABASE_URL` constant (one line each).
@@ -185,17 +187,20 @@ model_config = SettingsConfigDict(
     extra="ignore",
 )
 ```
+
 - `env_file=".env"` is resolved **relative to the current working directory**, so run the app from `backend/`.
 - `extra="ignore"`: if `.env` contains keys that `Settings` doesn't declare, ignore them instead of crashing.
 
 ```python
 database_url: str | None = None
 ```
+
 This is optional **only in Phase 1** so the API can start without Postgres. Phase 2 makes it required, so a missing DB URL becomes a startup error.
 
 ```python
 settings = Settings()
 ```
+
 A single module-level instance, created once at import. The simplest choice. (A FastAPI-docs alternative is `@lru_cache def get_settings()` + `Depends`, which makes overriding settings in tests easier. We'll switch if we need it.)
 
 ### `app/api/health.py`
@@ -207,6 +212,7 @@ router = APIRouter(tags=["health"])
 def health() -> dict[str, str]:
     return {"status": "ok"}
 ```
+
 - `tags` groups the endpoint in the `/docs` UI.
 - The return type hint is used by FastAPI for the OpenAPI schema.
 - It's a plain `def`, not `async def`, because there's nothing to await. (FastAPI runs sync endpoints in a threadpool, so they don't block the event loop.)
@@ -216,6 +222,7 @@ def health() -> dict[str, str]:
 ```python
 settings = Settings(_env_file=None)
 ```
+
 `_env_file=None` tells this one instance to **skip your real `.env`**, so the test only sees variables set via `monkeypatch.setenv`. Tests must not depend on a developer's local files.
 
 ## 7. Request Flow
@@ -234,15 +241,15 @@ If the path doesn't match any route, FastAPI returns `404 {"detail": "Not Found"
 
 ## 8. Important Decisions
 
-| Decision | Why | Trade-off |
-|---|---|---|
-| `/health` doesn't touch the DB | Liveness must not depend on external services | Need a separate readiness check (Phase 2) |
-| `pydantic-settings` | Validation + types + fail fast | One more concept to learn |
-| Module-level `settings` | Simplest | Slightly harder to override in tests |
-| pip + `requirements*.txt` | You already used it, and it's universal | No lockfile for transitive deps. `uv`/Poetry with `pyproject.toml` is the modern alternative (Phase 13) |
-| No app factory / service layer yet | Nothing needs them | We'll add them when there's a real need |
-| Root `.gitignore`, `.env.*` blocked except `.env.example` | Protects secrets anywhere in the repo, including a future `frontend/.env` | — |
-| `httpx2` in dev requirements | Starlette now prefers `httpx2` for `TestClient` (it warns with `httpx`) | — |
+| Decision                                                       | Why                                                                          | Trade-off                                                                                                  |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `/health` doesn't touch the DB                               | Liveness must not depend on external services                                | Need a separate readiness check (Phase 2)                                                                  |
+| `pydantic-settings`                                          | Validation + types + fail fast                                               | One more concept to learn                                                                                  |
+| Module-level`settings`                                       | Simplest                                                                     | Slightly harder to override in tests                                                                       |
+| pip +`requirements*.txt`                                     | You already used it, and it's universal                                      | No lockfile for transitive deps.`uv`/Poetry with `pyproject.toml` is the modern alternative (Phase 13) |
+| No app factory / service layer yet                             | Nothing needs them                                                           | We'll add them when there's a real need                                                                    |
+| Root`.gitignore`, `.env.*` blocked except `.env.example` | Protects secrets anywhere in the repo, including a future`frontend/.env`   | —                                                                                                         |
+| `httpx2` in dev requirements                                 | Starlette now prefers`httpx2` for `TestClient` (it warns with `httpx`) | —                                                                                                         |
 
 ## 9. Common Mistakes
 
@@ -266,9 +273,11 @@ source ../.venv/bin/activate
 pip install -r requirements-dev.txt
 pytest -v
 ```
+
 Expected: `5 passed`.
 
 Manual check:
+
 ```bash
 uvicorn app.main:app --reload
 # in another terminal:
@@ -278,6 +287,7 @@ curl http://127.0.0.1:8000/            # {"message":"AI Restaurant Agent API is 
 ```
 
 Fail-fast check:
+
 ```bash
 ENVIRONMENT=prod uvicorn app.main:app   # should crash with a ValidationError
 ```

@@ -1,6 +1,7 @@
 from logging.config import fileConfig
 
-from app.config import settings  # wired into Alembic in Phase 2
+import app.models  # noqa: F401  (registers all models on Base.metadata)
+from app.config import settings
 from app.db.base import Base
 
 from sqlalchemy import engine_from_config
@@ -12,15 +13,18 @@ from alembic import context
 # access to the values within the .ini file in use.
 config = context.config
 
+# The URL is not stored in alembic.ini (it contains a password).
+# Use the app's settings unless a caller (e.g. the test suite) already set one.
+# "%" is doubled because Alembic's config uses ConfigParser interpolation.
+if not config.get_main_option("sqlalchemy.url"):
+    config.set_main_option("sqlalchemy.url", settings.database_url.replace("%", "%%"))
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
+    fileConfig(config.config_file_name, disable_existing_loggers=False)
 
-# add your model's MetaData object here
-# for 'autogenerate' support
-# from myapp import mymodel
-# target_metadata = mymodel.Base.metadata
+# Autogenerate compares this metadata (our models) with the live database.
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,

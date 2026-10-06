@@ -20,9 +20,12 @@ class Settings(BaseSettings):
     app_version: str = "0.1.0"
     environment: Literal["development", "test", "production"] = "development"
 
-    # Optional in Phase 1 so the API runs without a database.
-    # Phase 2 makes this required.
-    database_url: str | None = None
+    # Required: the app refuses to start without a database URL.
+    database_url: str
+
+    # Separate database used only by pytest. Tests that need it are
+    # skipped when it is not set.
+    test_database_url: str | None = None
 
 
 settings = Settings()
